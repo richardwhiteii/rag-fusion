@@ -11,7 +11,7 @@ if openai.api_key is None:
 def generate_queries_chatgpt(original_query):
 
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[
             {"role": "system", "content": "You are a helpful assistant that generates multiple search queries based on a single input query."},
             {"role": "user", "content": f"Generate multiple search queries related to: {original_query}"},
@@ -53,6 +53,26 @@ def reciprocal_rank_fusion(search_results_dict, k=60):
 def generate_output(reranked_results, queries):
     return f"Final output based on {queries} and reranked documents: {list(reranked_results.keys())}"
 
+# Function to dynamically update the predefined set of documents
+def update_documents(new_documents):
+    global all_documents
+    all_documents.update(new_documents)
+
+# Function to test the relevance of generated queries and search results
+def test_relevance():
+    test_query = "impact of climate change"
+    generated_queries = generate_queries_chatgpt(test_query)
+    
+    all_results = {}
+    for query in generated_queries:
+        search_results = vector_search(query, all_documents)
+        all_results[query] = search_results
+    
+    reranked_results = reciprocal_rank_fusion(all_results)
+    
+    final_output = generate_output(reranked_results, generated_queries)
+    
+    print("Test Relevance Output:", final_output)
 
 # Predefined set of documents (usually these would be from your search database)
 all_documents = {
@@ -83,3 +103,6 @@ if __name__ == "__main__":
     final_output = generate_output(reranked_results, generated_queries)
     
     print(final_output)
+    
+    # Test the relevance of the generated queries and search results
+    test_relevance()

@@ -29,3 +29,15 @@ That's where RAG-Fusion comes in. Detailed in the article, "The Next Frontier of
 ## Why RAG-Fusion?
 
 RAG-Fusion is an ongoing experiment that aims to make search smarter and more context-aware, thus helping us uncover the richer, deeper strata of information that we might not have found otherwise.
+
+## How to Update the Code and Documents
+
+To keep the code and documents relevant, follow these steps:
+
+1. **Update the Code**: Ensure you are using the latest version of the OpenAI API and other dependencies. Regularly check for updates and apply them as needed.
+
+2. **Update the Documents**: The predefined set of documents can be dynamically updated using the `update_documents` function in `main.py`. Add new documents to the set by calling this function with the new documents as an argument.
+
+## How to Run the Tests
+
+To ensure the relevance of the generated queries and search results, run the tests included in the code. The `test_relevance` function in `main.py` will generate queries, perform searches, and validate the results. Simply call this function to execute the tests.
